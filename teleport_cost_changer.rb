@@ -6,7 +6,13 @@ files.each do |file|
   files.delete(file) unless file.end_with?('.htm')
 end
 
+changes = Array.new
+
 files.each do |f|
+  unless f.end_with?('.htm')
+    next
+  end
+
   doc = Nokogiri::HTML(open(f))
 
   doc.xpath('//*[starts-with(@action, "bypass -h npc_%objectId%_goto")]').each do |a|
@@ -24,5 +30,6 @@ files.each do |f|
   end
 
   new_file = File.new(f, 'w+')
-  new_file.syswrite(doc.to_html)
+  new_file.syswrite(doc.content)
+  puts "#{f} Written"
 end
