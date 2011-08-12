@@ -19,7 +19,6 @@ files.each do |f|
 
   doc.xpath('//*[starts-with(@action, "bypass -h npc_%objectId%_goto")]').each do |a|
     content = a.content
-    puts content
 
     # Search for numbers within content
     if content =~ /([\d]+) adena/i
@@ -34,11 +33,9 @@ files.each do |f|
     end
   end
 
-  if changed == true
+  unless changed == true
     next
   end
-
-  next
 
   changedContent = doc.to_html
   changedContent = changedContent.gsub('&amp;', '&')
