@@ -30,6 +30,6 @@ files.each do |f|
   end
 
   new_file = File.new(f, 'w+')
-  new_file.syswrite(doc.content)
+  new_file.syswrite(doc.to_html)
   puts "#{f} Written"
 end
