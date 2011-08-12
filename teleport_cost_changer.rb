@@ -19,7 +19,7 @@ files.each do |f|
     content = a.content
 
     # Search for numbers within content
-    if content =~ /([\d]+) Adena/i
+    if content =~ /([\d]+)/
       number = $1
       number = number.to_i
       new_number = number/15
