@@ -15,26 +15,30 @@ files.each do |f|
 
   doc = Nokogiri::HTML(open(f))
 
-  count = 0
+  changed = false
 
   doc.xpath('//*[starts-with(@action, "bypass -h npc_%objectId%_goto")]').each do |a|
     content = a.content
+    puts content
 
     # Search for numbers within content
-    if content =~ /([\d]+) adena/
+    if content =~ /([\d]+) adena/i
+      changed = true
+
       number = $1
       number = number.to_i
       new_number = number/15
 
       content = content.gsub(number.to_s, new_number.to_s)
       a.content = content
-      count = count + 1
     end
   end
 
-  if count == 0
+  if changed == true
     next
   end
+
+  next
 
   changedContent = doc.to_html
   changedContent = changedContent.gsub('&amp;', '&')
